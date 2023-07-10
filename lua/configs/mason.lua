@@ -18,13 +18,32 @@ end
 
 mason.setup()
 mason_lsp.setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright",},
+	ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright", },
 	handlers = {
 		function(server)
 			local opts = {
 				capabilities = require("configs.lsp.handler").capabilities,
 				on_attach = require("configs.lsp.handler").on_attach,
 			}
+
+			if server == 'lua_ls' then
+				local lua_opts = {
+					settings = {
+						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							workspace = {
+								library = {
+									[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+									[vim.fn.stdpath("config") .. "/lua"] = true,
+								},
+							},
+						},
+					},
+				}
+				opts = vim.tbl_deep_extend("force", lua_opts, opts)
+			end
 			lspconfig[server].setup(opts)
 		end,
 	}

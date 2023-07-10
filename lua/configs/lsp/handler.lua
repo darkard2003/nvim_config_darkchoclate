@@ -6,13 +6,13 @@ M.setup = function()
 	vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 	local signs = {
-			{ name = "DiagnosticSignError", text = "" },
-			{ name = "DiagnosticSignWarn", text = "" },
-			{ name = "DiagnosticSignHint", text = "" },
-			{ name = "DiagnosticSignInfo", text = "" },
-		}
+		{ name = "DiagnosticSignError", text = "" },
+		{ name = "DiagnosticSignWarn",  text = "" },
+		{ name = "DiagnosticSignHint",  text = "" },
+		{ name = "DiagnosticSignInfo",  text = "" },
+	}
 
-	for _,sign in ipairs(signs) do
+	for _, sign in ipairs(signs) do
 		vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 	end
 
@@ -35,7 +35,6 @@ M.setup = function()
 			prefix = "",
 		},
 	}
-
 end
 
 local function lsp_keymaps(buff)
@@ -77,7 +76,7 @@ end
 
 local ok_cmp_lsp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
 if not ok_cmp_lsp then
-	print("Error :: could not load nvim_cmp_lsp "..cmp_lsp)
+	print("Error :: could not load nvim_cmp_lsp " .. cmp_lsp)
 	return
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
