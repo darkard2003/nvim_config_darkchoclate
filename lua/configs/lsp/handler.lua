@@ -1,10 +1,12 @@
 local M = {}
 
+local km = vim.keymap.set
+
 M.setup = function()
-	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-	vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+	km('n', 'gk', vim.diagnostic.open_float)
+	km('n', '[d', vim.diagnostic.goto_prev)
+	km('n', ']d', vim.diagnostic.goto_next)
+	km('n', '<space>q', vim.diagnostic.setloclist)
 	local signs = {
 		{ name = "DiagnosticSignError", text = "" },
 		{ name = "DiagnosticSignWarn",  text = "" },
@@ -18,7 +20,7 @@ M.setup = function()
 
 	local config = {
 		-- disable virtual text
-		virtual_text = false,
+		virtual_text = true,
 		-- show signs
 		signs = {
 			active = signs,
@@ -35,28 +37,40 @@ M.setup = function()
 			prefix = "",
 		},
 	}
+
 	vim.diagnostic.config(config)
+
+	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+		border = "rounded",
+		width = 60,
+	})
+
+	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+		border = "rounded",
+		width = 60,
+	})
+
 end
 
 
 local function lsp_keymaps(buff)
 	vim.bo[buff].omnifunc = 'v:lua.vim.lsp.omnifunc'
 	local opts = { buffer = buff }
-	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-	vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+	km('n', 'gD', vim.lsp.buf.declaration, opts)
+	km('n', 'gd', vim.lsp.buf.definition, opts)
+	km('n', 'K', vim.lsp.buf.hover, opts)
+	km('n', 'gi', vim.lsp.buf.implementation, opts)
 	-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-	vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-	vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-	vim.keymap.set('n', '<space>wl', function()
+	km('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+	km('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+	km('n', '<space>wl', function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, opts)
 	-- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-	vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-	vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-	vim.keymap.set('n', '<space>fm', function()
+	km('n', '<leader>rn', vim.lsp.buf.rename, opts)
+	km({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+	km('n', 'gr', vim.lsp.buf.references, opts)
+	km('n', '<space>fm', function()
 		vim.lsp.buf.format { async = true }
 	end, opts)
 end
