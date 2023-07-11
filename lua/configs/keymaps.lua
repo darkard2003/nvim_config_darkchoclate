@@ -3,10 +3,6 @@ local opts = {
 	noremap = true,
 }
 
-local term_opts = {
-	silent = true,
-}
-
 local km = vim.keymap.set
 
 -- Set the leader
@@ -23,4 +19,5 @@ km("n", "<C-j>", "<C-w>j", opts)
 km("n", "<C-k>", "<C-w>k", opts)
 km("n", "<C-l>", "<C-w>l", opts)
 
-
+-- <leader>, x to close current buffer
+km("n", "<leader>x", ":bd<CR>", opts)

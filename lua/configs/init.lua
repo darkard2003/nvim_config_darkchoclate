@@ -1,3 +1,8 @@
+local globals_ok, globals = pcall(require, "configs.globals")
+if not globals_ok then
+	print("Error loading globals: " .. globals)
+end
+
 local keymap_ok, keymap = pcall(require, "configs.keymaps")
 if not keymap_ok then
   print("Error loading keymaps: " .. keymap)
