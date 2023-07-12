@@ -4,6 +4,16 @@ return {
 	ft = "python",
 	config = function()
 		local dap_py = require "dap-python"
-		dap_py.setup([[C:\Users\kmc20\AppData\Local\nvim-data\mason\packages\debugpy\venv\Scripts\python]])
+
+		local function getdebugpypath()
+			local p = table.concat({vim.fn.stdpath "data", "mason", "packages", "debugpy", "venv", "Scripts", "python"}, '/')
+			-- Check if it is executable
+			if vim.fn.executable(p) ~= 1 then
+				p = table.concat({vim.fn.stdpath "data", "mason", "packages", "debugpy", "venv", "bin", "python"}, '/')
+			end
+			return p
+		end
+
+		dap_py.setup(getdebugpypath())
 	end,
 }
