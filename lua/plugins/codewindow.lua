@@ -1,6 +1,6 @@
 return {
 	"gorbit99/codewindow.nvim",
-	requires = {
+	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
 		"nvim-lua/plenary.nvim",
 	},
