@@ -68,7 +68,7 @@ local function lsp_keymaps(buff)
 	end, opts)
 	-- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
 	km('n', '<leader>rn', vim.lsp.buf.rename, opts)
-	km({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+	km({ 'n', '<leader>ca' }, '<leader>ca', vim.lsp.buf.code_action, opts)
 	km('n', 'gr', vim.lsp.buf.references, opts)
 	km('n', '<space>fm', function()
 		vim.lsp.buf.format { async = true }
