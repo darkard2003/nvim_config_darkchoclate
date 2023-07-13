@@ -25,7 +25,5 @@ return {
 		km('n', '<leader>dv', function ()
 			widgets.hover()
 		end, opts)
-
-
 	end,
 }

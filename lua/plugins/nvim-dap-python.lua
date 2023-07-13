@@ -6,10 +6,10 @@ return {
 		local dap_py = require "dap-python"
 
 		local function getdebugpypath()
-			local p = table.concat({vim.fn.stdpath "data", "mason", "packages", "debugpy", "venv", "Scripts", "python"}, '/')
+			local p = table.concat({vim.fn.stdpath "data", "mason", "bin", "python"}, '/')
 			-- Check if it is executable
 			if vim.fn.executable(p) ~= 1 then
-				p = table.concat({vim.fn.stdpath "data", "mason", "packages", "debugpy", "venv", "bin", "python"}, '/')
+				p = table.concat({vim.fn.stdpath "data", "mason", "bin", "python"}, '/')
 			end
 			return p
 		end

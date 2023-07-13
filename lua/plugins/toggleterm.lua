@@ -1,23 +1,44 @@
-local powershell_options = {
-  shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
-  shellcmdflag = "-nologo",
-  shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
-  shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
-  shellquote = "",
-  shellxquote = "",
-}
-
-for option, value in pairs(powershell_options) do
-  vim.opt[option] = value
-end
 
 return {
 	'akinsho/toggleterm.nvim',
 	version = "*",
 	config = function()
-		require("toggleterm").setup({
-			open_mapping = [[<c-\>]],
-		})
+		local opts = {noremap=true, silent=true}
+
+		local powershell_options = {
+			shell = vim.fn.executable "pwsh" == 1 and "pwsh -NoLogo" or "powershell -NoLogo",
+			shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+			shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+			shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+			shellquote = "",
+			shellxquote = "",
+		}
+
+		if jit.os == 'Windows' then
+			for option, value in pairs(powershell_options) do
+				vim.opt[option] = value
+			end
+		end
+
+		require("toggleterm").setup {
+			size = function (term)
+				if term.direction == "horizontal" then
+					return 15
+				elseif term.direction == "vertical" then
+					return vim.o.columns * 0.4
+				end
+			end,
+			open_mapping = [[<leader>tt]],
+			float_opts = {
+				border = 'double',
+				width = function()
+					return math.floor(vim.o.columns * 0.6)
+				end,
+				height = function()
+					return math.floor(vim.o.lines * 0.6)
+				end,
+			}
+		}
 			vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
 			vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
 			vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
@@ -26,9 +47,23 @@ return {
 			vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
 			vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 
-			Terminal = require("toggleterm.terminal").Terminal
-			float = Terminal:new({direction='float'})
+			local terminal = require("toggleterm.terminal").Terminal
+			local float = terminal:new({direction='float'})
 			vim.keymap.set('n', '<A-i>', function() float:toggle() end, {noremap=true, silent=true})
 			vim.keymap.set('t', '<A-i>', function() float:toggle() end, {noremap=true, silent=true})
+
+			local function create_new_horizontal_term()
+				local new_h = terminal:new({direction='horizontal'})
+				new_h:open()
+			end
+			local function create_new_tab_term()
+				local new_t = terminal:new({direction='tab', close_on_exit=true})
+				new_t:open()
+			end
+
+			vim.keymap.set('n', '<leader>th', create_new_horizontal_term, {noremap=true, silent=true})
+			vim.keymap.set('n', '<leader>tb', create_new_tab_term, {noremap=true, silent=true})
+			vim.keymap.set('n', '<leader>ts', [[<Cmd>TermSelect<CR>]], {noremap=true, silent=true})
+			vim.keymap.set('n', '<leader>trn', [[<Cmd>ToggleTermSetName<CR>]], {noremap=true, silent=true})
 	end
 }

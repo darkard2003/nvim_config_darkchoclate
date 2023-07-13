@@ -36,6 +36,7 @@ return {
 			km('n', '.', api.node.run.cmd, opts('Run command'))
 
 			km('n', '?', api.tree.toggle_help, opts('Help'))
+			km('n', 'q', api.tree.close, opts('Quit'))
 		end
 		require('nvim-tree').setup({
 			on_attach = my_on_attach,
