@@ -5,7 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 	},
 	lazy = true,
-	keys = { "<leader>mm", "<leader>mo" },
+    	keys = { "<leader>mm", "<leader>mo" },
 	config = function()
 		local cw = require("codewindow")
 		cw.setup()

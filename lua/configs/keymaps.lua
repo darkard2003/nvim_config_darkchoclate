@@ -1,7 +1,7 @@
 local opts = {
 	silent = true,
 	noremap = true,
-}
+ }
 
 local km = vim.keymap.set
 

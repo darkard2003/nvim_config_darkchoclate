@@ -85,6 +85,9 @@ M.on_attach = function(client, bufnr)
 	if client.name == "tsserver" then
 		client.server_capabilities.document_formatting = false
 	end
+	-- if client.name == "clangd" then
+	-- 	client.make_client_capabilities.offsetEncoding = { "utf-8", "utf-16" }
+	-- end
 	lsp_keymaps(bufnr)
 end
 

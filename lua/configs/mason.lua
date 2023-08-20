@@ -18,7 +18,7 @@ end
 
 mason.setup()
 mason_lsp.setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright", "angularls", "tsserver",},
+	ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright", "angularls", "tsserver" },
 	handlers = {
 		function(server)
 			local opts = {
@@ -26,7 +26,7 @@ mason_lsp.setup({
 				on_attach = require("configs.lsp.handler").on_attach,
 			}
 
-			if server == 'lua_ls' then
+			if server == "lua_ls" then
 				local lua_opts = {
 					settings = {
 						Lua = {
@@ -46,5 +46,5 @@ mason_lsp.setup({
 			end
 			lspconfig[server].setup(opts)
 		end,
-	}
+	},
 })

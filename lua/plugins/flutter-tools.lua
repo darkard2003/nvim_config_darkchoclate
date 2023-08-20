@@ -12,7 +12,16 @@ return {
 			lsp = {
 				on_attach = m.on_attach,
 				capabilities = m.capabilities,
-			}
+			},
+			decorations = {
+				statusline = {
+					app_version = true,
+					device = true,
+				},
+			},
+			widget_guides = {
+				enabled = true,
+			},
 		}
 
 		require("telescope").load_extension("flutter")
