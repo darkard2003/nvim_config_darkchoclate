@@ -227,7 +227,8 @@ ins_right({
         return time
     end,
     icon = " ",
-    color = { fg = colors.green, gui = "bold" },
+    -- Make the fg cyan and make it bold
+    color = { fg = colors.cyan, gui = "bold" },
 })
 
 ins_right({
