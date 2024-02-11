@@ -18,7 +18,7 @@ end
 
 mason.setup()
 mason_lsp.setup({
-  ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright", "angularls", "tsserver", "gopls", },
+  ensure_installed = { "lua_ls",  "clangd", "pyright", "angularls", "tsserver", "gopls", },
   handlers = {
     function(server)
       local opts = {

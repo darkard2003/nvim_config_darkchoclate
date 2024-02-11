@@ -1,35 +1,42 @@
 local M = {
   setup = function()
     local dap = require('dap')
-    local dart_path = vim.fn.exepath("dart")
-    local flutter_path = vim.fn.exepath("flutter")
-
-    if vim.fn.executable(dart_path) == 0 then
-      error("No dart executable found!")
+    if not vim.fn.executable('dart') then
+      error('Dart not found!')
       return
     end
-
-    if vim.fn.executable(flutter_path) == 0 then
-      error("No flutter executable found!")
+    if not vim.fn.executable('flutter') then
+      error('Flutter not found!')
       return
     end
-
     dap.adapters.dart = {
-      type = "executable",
-      command = "dart",
-      args = { "debug_adapter" },
-      port = 5032,
+      type = 'executable',
+      command = 'dart',
+      args = { 'debug_adapter' }
     }
-
+    dap.adapters.flutter = {
+      type = 'executable',
+      command = 'flutter',
+      args = { 'debug_adapter' }
+    }
     dap.configurations.dart = {
       {
         type = "dart",
         request = "launch",
-        name = "Launch Dart Program",
-        program = "${file}",
+        name = "Launch dart",
+        dartSdkPath = "~/flutter/bin/cache/dart-sdk",
+        flutterSdkPath = "~/flutter",
+        program = "${workspaceFolder}/lib/main.dart",
         cwd = "${workspaceFolder}",
-        args = {}, -- For Dart apps, use "args". For Flutter apps, use "toolArgs".
-        port = 5032,
+      },
+      {
+        type = "flutter",
+        request = "launch",
+        name = "Launch flutter",
+        dartSdkPath = "~/flutter/bin/cache/dart-sdk",
+        flutterSdkPath = "~/flutter",
+        program = "${workspaceFolder}/lib/main.dart",
+        cwd = "${workspaceFolder}",
       }
     }
   end
