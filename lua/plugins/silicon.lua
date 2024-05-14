@@ -30,5 +30,13 @@ else
   return {
     'krivahtoo/silicon.nvim',
     build = './install.sh',
+    config = function()
+      require('silicon').setup({
+        theme = 'Monokai Extended',
+        output = {
+          clipboard = false,
+        }
+      })
+    end
   }
 end
