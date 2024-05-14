@@ -1,4 +1,4 @@
-if vim.fn.has("win32") == 1 then
+if vim.fn.has("unix") == 0 then
   return {
     "ellisonleao/carbon-now.nvim",
     lazy = true,
@@ -30,6 +30,5 @@ else
   return {
     'krivahtoo/silicon.nvim',
     build = './install.sh',
-    opts = true,
   }
 end
