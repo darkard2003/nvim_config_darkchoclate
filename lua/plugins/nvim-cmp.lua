@@ -25,7 +25,7 @@ return {
           mode = "symbol",
           maxwidth = 50,
           ellipsis_char = "...",
-          symbol_map = { Copilot = "" },
+          symbol_map = { Copilot = "", Supermaven = "", },
         }),
       },
       window = {
@@ -55,6 +55,7 @@ return {
       }),
       sources = cmp.config.sources({
         { name = "copilot" },
+        { name = "supermaven" },
         { name = "nvim_lsp" },
         { name = "luasnip" },
       }, {
