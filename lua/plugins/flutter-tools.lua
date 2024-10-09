@@ -22,10 +22,6 @@ return {
         on_attach = m.on_attach,
         capabilities = m.capabilities,
       },
-      -- debugger = {
-      --   enabled = true,
-      --   run_via_dap = true,
-      -- },
       decorations = {
         statusline = {
           app_version = true,
@@ -35,6 +31,13 @@ return {
       widget_guides = {
         enabled = true,
       },
+      debugger = {
+        enabled = true,
+      },
+      dev_log = {
+        enabled = false,
+      }
+
     }
 
     require("telescope").load_extension("flutter")
