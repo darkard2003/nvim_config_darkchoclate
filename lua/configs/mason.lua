@@ -16,9 +16,27 @@ if not ok_lsp then
   return
 end
 
+local ensure_installed = { "lua_ls" }
+
+if vim.fn.executable("clang") == 1 then
+  table.insert(ensure_installed, "clangd")
+end
+
+if vim.fn.executable("python") == 1 then
+  table.insert(ensure_installed, "pyright")
+end
+
+if vim.fn.executable("ng") == 1 then
+  table.insert(ensure_installed, "angularls")
+end
+
+if vim.fn.executable("go") == 1 then
+  table.insert(ensure_installed, "gopls")
+end
+
 mason.setup()
 mason_lsp.setup({
-  ensure_installed = { "lua_ls", "clangd", "pyright", "angularls", "gopls", },
+  ensure_installed = ensure_installed,
   handlers = {
     function(server)
       local opts = {
