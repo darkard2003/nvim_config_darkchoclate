@@ -22,7 +22,7 @@ if vim.fn.executable("clang") == 1 then
   table.insert(ensure_installed, "clangd")
 end
 
-if vim.fn.executable("python") == 1 then
+if vim.fn.executable("python") == 1 and vim.fn.executable("node") == 1 then
   table.insert(ensure_installed, "pyright")
 end
 
